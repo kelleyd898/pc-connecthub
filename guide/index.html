@@ -423,6 +423,15 @@
       .contact-flex { flex-direction: column; text-align: center; }
       .keyword-tags { justify-content: center; }
     }
+
+    @keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-15px); /* Button 15px upar jayega */
+  }
+}
   </style>
    <!-- <script src="//code.jivosite.com/widget/ekpJGtSIOH" async></script> -->
   <!-- Google tag (gtag.js) -->
@@ -696,9 +705,11 @@
     transition: all 0.3s ease;
     text-align: center;
     line-height: 1.4;
+    /* Animation details niche hain */
+    animation: bounce 2s infinite ease-in-out;
   "
-  onmouseover="this.style.transform='scale(1.08)'; this.style.boxShadow='0 18px 45px rgba(0,0,0,0.6)'"
-  onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 12px 35px rgba(0,0,0,0.45)'"
+  onmouseover="this.style.transform='scale(1.08)'; this.style.boxShadow='0 18px 45px rgba(0,0,0,0.6)'; this.style.animationPlayState='paused'"
+  onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 12px 35px rgba(0,0,0,0.45)'; this.style.animationPlayState='running'"
 >
   📞 Need Help  
   <br>
