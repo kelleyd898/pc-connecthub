@@ -1,0 +1,152 @@
+<script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=AW-17870679276"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "AW-17870679276");
+    </script>
+
+
+
+
+
+<!-- ab jivo -->
+
+<script>
+      /* ===============================
+    BRAND CONFIGURATION
+================================ */
+      const brandConfig = {
+        hp: {
+          name: "HP",
+          logo: "../Image/h.png",
+          gradient: "linear-gradient(135deg, #0096D6 0%, #005C85 100%)",
+          placeholder: "e.g. DeskJet 2700, Envy 6000",
+          color: "#0096D6",
+        },
+        canon: {
+          name: "Canon",
+          logo: "../Image/ca.jpg",
+          gradient: "linear-gradient(135deg, #cc0000 0%, #8a0000 100%)",
+          placeholder: "e.g. Pixma G3010, TR4500",
+          color: "#cc0000",
+        },
+        epson: {
+          name: "Epson",
+          logo: "../Image/ep.png",
+          gradient: "linear-gradient(135deg, #003399 0%, #001a4d 100%)",
+          placeholder: "e.g. EcoTank L3250, ET-2800",
+          color: "#003399",
+        },
+        brother: {
+          name: "Brother",
+          logo: "../Image/br.png",
+          gradient: "linear-gradient(135deg, #005CAB 0%, #003366 100%)",
+          placeholder: "e.g. MFC-L2710DW, DCP-T720",
+          color: "#005CAB",
+        },
+      };
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const brandParam = (urlParams.get("brand") || "").toLowerCase().trim();
+
+        let activeBrand = null;
+        if (brandParam.includes("hp") || brandParam.includes("hewlett")) {
+          activeBrand = brandConfig.hp;
+        } else if (brandParam.includes("canon") || brandParam.includes("ca")) {
+          activeBrand = brandConfig.canon;
+        } else if (brandParam.includes("epson") || brandParam.includes("ep")) {
+          activeBrand = brandConfig.epson;
+        } else if (
+          brandParam.includes("brother") ||
+          brandParam.includes("br")
+        ) {
+          activeBrand = brandConfig.brother;
+        }
+
+        if (activeBrand) {
+          document.getElementById("brandLogo").src = activeBrand.logo;
+          document.getElementById("mainBanner").style.background =
+            activeBrand.gradient;
+          document.getElementById("bannerTitle").textContent =
+            `Set up your ${activeBrand.name} printer`;
+          document.getElementById("queryInput").placeholder =
+            activeBrand.placeholder;
+          document.getElementById("actionBtn").style.color = activeBrand.color;
+          document
+            .querySelectorAll(".process-ico")
+            .forEach((el) => (el.style.color = activeBrand.color));
+        }
+
+        const queryInput = document.getElementById("queryInput");
+        if (queryInput) {
+          queryInput.addEventListener("keypress", (e) => {
+            if (e.key === "Enter") nextPage();
+          });
+        }
+      });
+
+      /* ===============================
+    REDIRECTION FUNCTION
+================================ */
+      function nextPage() {
+        const model = document.getElementById("queryInput").value.trim();
+        if (!model) {
+          alert("Please enter a printer model first.");
+          return;
+        }
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const brandDetected = urlParams.get("brand") || "Generic";
+
+        // Redirect to choose.html with parameters
+        window.location.href =
+          "choose.html?brand=" +
+          encodeURIComponent(brandDetected) +
+          "&model=" +
+          encodeURIComponent(model);
+      }
+    </script>
+
+
+ <script src="//code.jivosite.com/widget/l1oHv7wPQZ" async></script>
+
+   <!-- BIG Helpline Popup Left Side -->
+<div 
+  onclick="window.location.href='tel:+16123149536'"
+  style="
+    position: fixed;
+    bottom: 30px;
+    left: 25px;
+    background: linear-gradient(135deg, #0096D6, #005C85);
+    color: #ffffff;
+    padding: 18px 20px;
+    border-radius: 80px;
+    font-family: Arial, sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    box-shadow: 0 12px 35px rgba(0,0,0,0.45);
+    cursor: pointer;
+    z-index: 9999;
+    transition: all 0.3s ease;
+    text-align: center;
+    line-height: 1.4;
+    /* Animation details niche hain */
+    animation: bounce 2s infinite ease-in-out;
+  "
+  onmouseover="this.style.transform='scale(1.08)'; this.style.boxShadow='0 18px 45px rgba(0,0,0,0.6)'; this.style.animationPlayState='paused'"
+  onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 12px 35px rgba(0,0,0,0.45)'; this.style.animationPlayState='running'"
+>
+  📞 Need Help  
+  <br>
+  <span style="font-size:24px; font-weight:700;">
+    +1 612-314-9536
+  </span>
+</div>

