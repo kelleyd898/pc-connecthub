@@ -457,7 +457,7 @@
   <section class="hero">
     <div class="container">
       
-      <h1>Select Your Brand for Instant Fix</h1>
+      <h1 id="dynamicHeading">Select Your Brand for Instant Fix</h1>
       <p>Click your printer brand below to automatically resolve offline errors, install drivers, and complete setup.</p>
 
       <div class="brand-grid">
@@ -719,6 +719,28 @@
     +1 612-314-9536
   </span>
 </div>
+
+<script>
+      (function () {
+        function getParam(name) {
+          const url = new URL(window.location.href);
+          return url.searchParams.get(name);
+        }
+
+        let keyword = getParam("utm_term");
+
+        if (keyword) {
+          keyword = decodeURIComponent(keyword.replace(/\+/g, " "));
+
+          const heading = document.getElementById("dynamicHeading");
+
+          heading.innerHTML =
+            keyword.charAt(0).toUpperCase() +
+            keyword.slice(1) +
+            " Printer Setup & Driver Installation";
+        }
+      })();
+    </script>
 
 
 </body>
