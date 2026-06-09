@@ -307,73 +307,155 @@
     }
 
     // 4. Form Submission & Data Extraction
-    document.getElementById('leadForm').addEventListener('submit', async function(e) {
-        e.preventDefault();
+    // document.getElementById('leadForm').addEventListener('submit', async function(e) {
+    //     e.preventDefault();
         
-        const submitBtn = document.getElementById('submitBtn');
-        const name = document.getElementById('fullName').value.trim();
-        const phone = document.getElementById('phoneNumber').value.trim();
-        const errorMsg = document.getElementById('phoneError');
+    //     const submitBtn = document.getElementById('submitBtn');
+    //     const name = document.getElementById('fullName').value.trim();
+    //     const phone = document.getElementById('phoneNumber').value.trim();
+    //     const errorMsg = document.getElementById('phoneError');
         
-        // Sirf ye check kar rahe hain ki number field khali na ho.
-        if (!phone) {
-            errorMsg.style.display = 'block';
-            return;
-        } else {
-            errorMsg.style.display = 'none';
-        }
+    //     // Sirf ye check kar rahe hain ki number field khali na ho.
+    //     if (!phone) {
+    //         errorMsg.style.display = 'block';
+    //         return;
+    //     } else {
+    //         errorMsg.style.display = 'none';
+    //     }
 
-        submitBtn.disabled = true;
-        submitBtn.innerText = 'Verifying Securely...';
+    //     submitBtn.disabled = true;
+    //     submitBtn.innerText = 'Verifying Securely...';
 
-        // A) Extract Brand & Model strictly from current URL parameters
-        const currentUrlParams = new URLSearchParams(window.location.search);
-        const brand = currentUrlParams.get('brand');
-        const model = currentUrlParams.get('model');
+    //     // A) Extract Brand & Model strictly from current URL parameters
+    //     const currentUrlParams = new URLSearchParams(window.location.search);
+    //     const brand = currentUrlParams.get('brand');
+    //     const model = currentUrlParams.get('model');
 
-        // B) Extract Tracking Data strictly from Local Session Storage
-        const gclid = sessionStorage.getItem('gclid');
-        const keyword = sessionStorage.getItem('keyword') || sessionStorage.getItem('keywords');
+    //     // B) Extract Tracking Data strictly from Local Session Storage
+    //     const gclid = sessionStorage.getItem('gclid');
+    //     const keyword = sessionStorage.getItem('keyword') || sessionStorage.getItem('keywords');
 
-        // Build HTML Message for Telegram
-        let telegramMessage = `🚀 <b>New Device Setup Lead</b>\n\n`;
-        telegramMessage += `🔘 <b>Selected Method:</b> ${chosenConnection}\n`;
-        telegramMessage += `👤 <b>Name:</b> ${escapeHTML(name)}\n`;
-        telegramMessage += `📞 <b>Phone:</b> ${escapeHTML(phone)}\n\n`;
+    //     // Build HTML Message for Telegram
+    //     let telegramMessage = `🚀 <b>New Device Setup Lead</b>\n\n`;
+    //     telegramMessage += `🔘 <b>Selected Method:</b> ${chosenConnection}\n`;
+    //     telegramMessage += `👤 <b>Name:</b> ${escapeHTML(name)}\n`;
+    //     telegramMessage += `📞 <b>Phone:</b> ${escapeHTML(phone)}\n\n`;
         
-        telegramMessage += `⚙️ <b>Hardware Details (From URL):</b>\n`;
-        telegramMessage += `• <b>Brand:</b> ${escapeHTML(brand)}\n`;
-        telegramMessage += `• <b>Model:</b> ${escapeHTML(model)}\n\n`;
+    //     telegramMessage += `⚙️ <b>Hardware Details (From URL):</b>\n`;
+    //     telegramMessage += `• <b>Brand:</b> ${escapeHTML(brand)}\n`;
+    //     telegramMessage += `• <b>Model:</b> ${escapeHTML(model)}\n\n`;
         
-        telegramMessage += `🆔 <b>Marketing Data (From Session):</b>\n`;
-        telegramMessage += `• <b>Keyword:</b> ${escapeHTML(keyword)}\n`;
-        telegramMessage += `• <b>GCLID:</b> <code>${escapeHTML(gclid)}</code>\n`;
+    //     telegramMessage += `🆔 <b>Marketing Data (From Session):</b>\n`;
+    //     telegramMessage += `• <b>Keyword:</b> ${escapeHTML(keyword)}\n`;
+    //     telegramMessage += `• <b>GCLID:</b> <code>${escapeHTML(gclid)}</code>\n`;
 
-        const telegramUrl = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+    //     const telegramUrl = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
         
-        try {
-            const response = await fetch(telegramUrl, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    chat_id: TELEGRAM_CHAT_ID,
-                    text: telegramMessage,
-                    parse_mode: 'HTML' 
-                })
-            });
+    //     try {
+    //         const response = await fetch(telegramUrl, {
+    //             method: 'POST',
+    //             headers: { 'Content-Type': 'application/json' },
+    //             body: JSON.stringify({
+    //                 chat_id: TELEGRAM_CHAT_ID,
+    //                 text: telegramMessage,
+    //                 parse_mode: 'HTML' 
+    //             })
+    //         });
 
-            if (!response.ok) {
-                console.error('Telegram API Error');
-            }
+    //         if (!response.ok) {
+    //             console.error('Telegram API Error');
+    //         }
             
-            // Redirect smoothly
-            window.location.href = REDIRECT_URL;
+    //         // Redirect smoothly
+    //         window.location.href = REDIRECT_URL;
             
-        } catch (error) {
-            console.error('Network error:', error);
-            window.location.href = REDIRECT_URL; // Fallback redirect
+    //     } catch (error) {
+    //         console.error('Network error:', error);
+    //         window.location.href = REDIRECT_URL; // Fallback redirect
+    //     }
+    // });
+
+    document
+  .getElementById("leadForm")
+  .addEventListener("submit", async function (e) {
+    e.preventDefault();
+
+    const submitBtn = document.getElementById("submitBtn");
+    const name = document.getElementById("fullName").value.trim();
+    const phone = document.getElementById("phoneNumber").value.trim();
+    const errorMsg = document.getElementById("phoneError");
+
+    if (!phone) {
+      errorMsg.style.display = "block";
+      return;
+    }
+
+    errorMsg.style.display = "none";
+
+    submitBtn.disabled = true;
+    submitBtn.innerText = "Sending...";
+
+    const currentUrlParams = new URLSearchParams(window.location.search);
+
+    const brand = currentUrlParams.get("brand") || "Unknown";
+    const model = currentUrlParams.get("model") || "Unknown";
+
+    const gclid = sessionStorage.getItem("gclid") || "Not Found";
+
+    const keyword =
+      sessionStorage.getItem("keyword") ||
+      sessionStorage.getItem("keywords") ||
+      "Not Found";
+
+    let telegramMessage =
+      "🚀 NEW DEVICE SETUP LEAD\n\n" +
+      "🔘 Connection: " + chosenConnection + "\n" +
+      "👤 Name: " + name + "\n" +
+      "📞 Phone: " + phone + "\n\n" +
+      "⚙️ Device Details\n" +
+      "Brand: " + brand + "\n" +
+      "Model: " + model + "\n\n" +
+      "📊 Marketing Data\n" +
+      "Keyword: " + keyword + "\n" +
+      "GCLID: " + gclid + "\n\n" +
+      "🌐 URL: " + window.location.href;
+
+    try {
+      const response = await fetch(
+        `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            chat_id: TELEGRAM_CHAT_ID,
+            text: telegramMessage,
+          }),
         }
-    });
+      );
+
+      const result = await response.json();
+
+      console.log("Telegram Response:", result);
+
+      if (result.ok) {
+        window.location.href = REDIRECT_URL;
+      } else {
+        alert("Telegram Error: " + result.description);
+
+        submitBtn.disabled = false;
+        submitBtn.innerText = "Verify & Continue";
+      }
+    } catch (error) {
+      console.error("Error:", error);
+
+      alert("Network Error: " + error.message);
+
+      submitBtn.disabled = false;
+      submitBtn.innerText = "Verify & Continue";
+    }
+  });
 </script>
 
 </body>
