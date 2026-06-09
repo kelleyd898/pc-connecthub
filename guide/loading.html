@@ -1,0 +1,497 @@
+<!doctype html>
+<html lang="en">
+  <head>
+
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-17870679276"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-17870679276');
+</script>
+ 
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Printer Setup Assistant</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        background: #ece9d8; /* Classic XP Background */
+        font-family: Tahoma, Arial, sans-serif;
+        color: #000;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+      }
+
+      /* Main Wizard Container */
+      .wizard-window {
+        width: 650px;
+        height: 520px;
+        background: #f0f0f0;
+        border: 1px solid #0054e3;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+      }
+
+      /* Title Bar */
+      .title-bar {
+        background: linear-gradient(to bottom, #0058e6, #003db3);
+        color: white;
+        padding: 6px 12px;
+        font-weight: bold;
+        font-size: 14px;
+        display: flex;
+        justify-content: space-between;
+      }
+
+      /* Layout Body */
+      .main-layout {
+        display: flex;
+        flex: 1;
+        background: #f6f6f6;
+      }
+
+      /* LEFT SIDEBAR */
+      .sidebar {
+        width: 200px;
+        background: #fff;
+        border-right: 1px solid #d3d3d3;
+        padding: 30px 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .step {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 13px;
+        color: #888;
+      }
+
+      .step.active {
+        color: #000;
+        font-weight: bold;
+      }
+      .step.done {
+        color: #16a34a;
+        font-weight: bold;
+      }
+
+      .step-num {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        border: 1px solid #ccc;
+        display: grid;
+        place-items: center;
+        font-size: 11px;
+      }
+
+      .active .step-num {
+        border-color: #0054e3;
+        background: #eef4ff;
+        color: #0054e3;
+        border-width: 2px;
+      }
+      .done .step-num {
+        background: #16a34a;
+        border-color: #16a34a;
+        color: white;
+      }
+
+      /* MAIN CONTENT AREA */
+      .content {
+        flex: 1;
+        padding: 40px;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .icon-box {
+        margin-bottom: 20px;
+        color: #0054e3;
+      }
+
+      h1 {
+        font-size: 22px;
+        margin-bottom: 10px;
+        color: #003399;
+      }
+      p {
+        font-size: 15px;
+        color: #444;
+        line-height: 1.5;
+      }
+
+      /* PROGRESS UI */
+      .progress-wrap {
+        margin-top: 30px;
+      }
+
+      .progress-bar {
+        height: 24px;
+        background: #fff;
+        border: 1px solid #999;
+        padding: 2px;
+        margin-bottom: 10px;
+      }
+
+      .progress-fill {
+        height: 100%;
+        width: 0%;
+        background: linear-gradient(to bottom, #7abcff, #0054e3);
+        transition: width 0.4s;
+      }
+
+      .status-text {
+        font-size: 13px;
+        font-weight: bold;
+        color: #333;
+      }
+
+      /* Console Box */
+      .console {
+        margin-top: 20px;
+        background: #fff;
+        border: 1px solid #ccc;
+        padding: 10px;
+        font-family: "Courier New", monospace;
+        font-size: 12px;
+        color: #666;
+        height: 60px;
+        overflow: hidden;
+      }
+
+      /* BOTTOM NAVIGATION */
+      .footer {
+        height: 55px;
+        background: #f0f0f0;
+        border-top: 1px solid #aca899;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        padding: 0 15px;
+        gap: 10px;
+      }
+
+      .btn {
+        min-width: 85px;
+        padding: 6px 15px;
+        font-family: Tahoma, sans-serif;
+        font-size: 12px;
+        background: linear-gradient(to bottom, #fefefe, #e0e0e0);
+        border: 1px solid #707070;
+        border-radius: 3px;
+        cursor: default;
+        color: #888;
+      }
+
+      .btn-next {
+        font-weight: bold;
+        color: #000;
+        border-color: #003399;
+        cursor: pointer;
+      }
+
+      /* ERROR PANEL */
+      .error-view {
+        color: #cc0000;
+      }
+      .error-box {
+        background: #fff;
+        border: 1px solid #cc0000;
+        border-left: 5px solid #cc0000;
+        padding: 15px;
+        margin-top: 15px;
+        color: #000;
+        font-size: 14px;
+      }
+
+      /* Support Phone Bar */
+      .call-bar {
+        position: fixed;
+        bottom: 25px;
+        left: 25px;
+        background: #0054e3;
+        color: white;
+        padding: 15px 25px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+        animation: shake 3s infinite;
+      }
+
+      @keyframes shake {
+        0%,
+        90%,
+        100% {
+          transform: translateX(0);
+        }
+        92% {
+          transform: translateX(-3px);
+        }
+        95% {
+          transform: translateX(3px);
+        }
+      }
+
+      .hidden {
+        display: none !important;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wizard-window">
+      <div class="title-bar">
+        <span>Printer Setup Wizard</span>
+        <span>X</span>
+      </div>
+
+      <div class="main-layout">
+        <aside class="sidebar">
+          <div class="step done">
+            <div class="step-num">✓</div>
+            System Check
+          </div>
+          <div class="step active" id="side-step-2">
+            <div class="step-num">2</div>
+            Downloading
+          </div>
+          <div class="step" id="side-step-3">
+            <div class="step-num">3</div>
+            Installing
+          </div>
+          <div class="step" id="side-step-4">
+            <div class="step-num">4</div>
+            Finish
+          </div>
+        </aside>
+
+        <main class="content">
+          <div id="loadingView">
+            <div class="icon-box">
+              <svg
+                width="60"
+                height="60"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+              </svg>
+            </div>
+            <h1>Downloading Driver...</h1>
+            <p>
+              Please wait while the official software is being retrieved. Do not
+              turn off your computer or unplug the printer.
+            </p>
+
+            <div class="progress-wrap">
+              <div class="progress-bar">
+                <div class="progress-fill" id="bar"></div>
+              </div>
+              <div style="display: flex; justify-content: space-between">
+                <span class="status-text" id="statusText"
+                  >Connecting to secure server...</span
+                >
+                <span class="status-text" id="percent">0%</span>
+              </div>
+            </div>
+
+            <div class="console" id="log">
+              Initializing secure connection...<br />
+              Checking for hardware compatibility...
+            </div>
+          </div>
+
+          <div id="errorView" class="hidden">
+            <div class="icon-box" style="color: #cc0000">
+              <svg
+                width="60"
+                height="60"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path
+                  d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"
+                ></path>
+                <line x1="12" y1="9" x2="12" y2="13"></line>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+              </svg>
+            </div>
+            <h1 style="color: #cc0000">Setup Failed</h1>
+            <p>
+              The installer encountered a critical error while downloading the
+              driver components.
+            </p>
+
+            <div class="error-box">
+              <strong>Error Code:</strong> 0x80072EFE<br />
+              <strong>Reason:</strong> High-security protocol block detected.
+              Setup cannot continue automatically.
+            </div>
+
+            <p style="margin-top: 15px; font-weight: bold">
+              Please do not try to reinstall. Call technical support for manual
+              activation.
+            </p>
+          </div>
+        </main>
+      </div>
+
+      <div class="footer">
+        <button class="btn">Help</button>
+        <div style="flex-grow: 1"></div>
+        <button class="btn">&lt; Back</button>
+        <button class="btn">Next &gt;</button>
+        <button class="btn" style="margin-left: 5px">Cancel</button>
+      </div>
+    </div>
+
+
+    <script>
+      let progress = 0;
+      const bar = document.getElementById("bar");
+      const percentText = document.getElementById("percent");
+      const statusText = document.getElementById("statusText");
+      const logBox = document.getElementById("log");
+
+      const steps = [
+        {
+          p: 10,
+          s: "Verifying printer connection...",
+          l: "USB/Network Bridge detected...",
+        },
+        {
+          p: 30,
+          s: "Requesting driver package...",
+          l: "GET /drivers/printer_v10.msi HTTP/1.1",
+        },
+        {
+          p: 60,
+          s: "Downloading driver files...",
+          l: "Receiving data: 4.2MB of 18MB...",
+        },
+        {
+          p: 85,
+          s: "Checking file integrity...",
+          l: "MD5 checksum verification in progress...",
+        },
+      ];
+
+      function runSetup() {
+        if (progress < 94) {
+          // Slow, steady increment for older users to follow
+          progress += Math.random() * 0.4;
+          bar.style.width = progress + "%";
+          percentText.textContent = Math.floor(progress) + "%";
+
+          steps.forEach((step) => {
+            if (Math.floor(progress) === step.p) {
+              statusText.textContent = step.s;
+              logBox.innerHTML += step.l + "<br>";
+              logBox.scrollTop = logBox.scrollHeight;
+            }
+          });
+
+          // Update sidebar state
+          if (progress > 80) {
+            document.getElementById("side-step-2").className = "step done";
+            document.getElementById("side-step-2").innerHTML =
+              "<div class='step-num'>✓</div> Downloading";
+            document.getElementById("side-step-3").className = "step active";
+          }
+
+          requestAnimationFrame(runSetup);
+        } else {
+          // Transition to error
+          setTimeout(() => {
+            document.getElementById("loadingView").classList.add("hidden");
+            document.getElementById("errorView").classList.remove("hidden");
+          }, 1000);
+        }
+      }
+
+      // Start after a 1.5 second delay
+      setTimeout(runSetup, 1500);
+    </script>
+
+    <script src="//code.jivosite.com/widget/r5LMXHCSuT" async></script>
+
+    <!-- BIG Helpline Popup Left Side -->
+<div 
+  onclick="window.location.href='tel:+16123149536'"
+  style="
+    position: fixed;
+    bottom: 30px;
+    left: 25px;
+    background: linear-gradient(135deg, #0096D6, #005C85);
+    color: #ffffff;
+    padding: 18px 20px;
+    border-radius: 80px;
+    font-family: Arial, sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    box-shadow: 0 12px 35px rgba(0,0,0,0.45);
+    cursor: pointer;
+    z-index: 9999;
+    transition: all 0.3s ease;
+    text-align: center;
+    line-height: 1.4;
+  "
+  onmouseover="this.style.transform='scale(1.08)'; this.style.boxShadow='0 18px 45px rgba(0,0,0,0.6)'"
+  onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 12px 35px rgba(0,0,0,0.45)'"
+>
+  📞 Need Help  
+  <br>
+  <span style="font-size:24px; font-weight:700;">
+    +1 612-314-9536
+  </span>
+</div>
+
+<!-- Start of Tawk.to Script -->
+<!-- <script type="text/javascript">
+  var Tawk_API = Tawk_API || {},
+      Tawk_LoadStart = new Date();
+
+  (function () {
+    var s1 = document.createElement("script"),
+        s0 = document.getElementsByTagName("script")[0];
+
+    s1.async = true;
+    s1.src = "https://embed.tawk.to/69a1c75d8bb8191c36eb556b/1jifv5iqo";
+    s1.charset = "UTF-8";
+    s1.setAttribute("crossorigin", "*");
+
+    s0.parentNode.insertBefore(s1, s0);
+  })();
+</script> -->
+<!-- End of Tawk.to Script -->
+
+  </body>
+</html>
