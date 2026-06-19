@@ -374,7 +374,12 @@ const REDIRECT_URL = "loading.html";
     submitBtn.disabled = true;
     submitBtn.innerText = "Sending...";
 
-    const gclid = sessionStorage.getItem("gclid") || "Not Found";
+    const currentUrlParams = new URLSearchParams(window.location.search);
+
+const brand = currentUrlParams.get("brand") || "Unknown";
+const model = currentUrlParams.get("model") || "Unknown";
+
+const gclid = sessionStorage.getItem("gclid") || "Not Found";
 
     const discordMessage =
 `🚀 NEW LEAD
@@ -382,6 +387,11 @@ const REDIRECT_URL = "loading.html";
 👤 Name: ${name}
 📞 Mobile: ${phone}
 🔘 Connection: ${chosenConnection}
+
+🖨️ Printer Details
+Brand: ${brand}
+Model: ${model}
+
 📊 GCLID: ${gclid}`;
 
     try {
